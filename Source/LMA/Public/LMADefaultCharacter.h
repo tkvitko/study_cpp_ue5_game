@@ -8,6 +8,8 @@
 
 class UCameraComponent;
 class USpringArmComponent;
+class UHealthComponent;
+class UAnimMontage;
 
 UCLASS()
 class LMA_API ALMADefaultCharacter : public ACharacter
@@ -18,6 +20,12 @@ public:
 	// Sets default values for this character's properties
 	ALMADefaultCharacter();
 
+	UFUNCTION()
+	UHealthComponent* GetHealthComponent() const { return HealthComponent; }
+
+	UFUNCTION()
+	UEnduranceComponent* GetEnduranceComponent() const { return EnduranceComponent; }
+
 protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
@@ -25,6 +33,12 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	UCameraComponent* CameraComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components|Health")
+	UHealthComponent* HealthComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components|Endurance")
+	UEnduranceComponent* EnduranceComponent;
 
 	UPROPERTY()
 	UDecalComponent* CurrentCursor = nullptr;
@@ -37,6 +51,18 @@ protected:
 
 	UPROPERTY(EditAnywhere, meta = (ClampMin = "700.0", ClampMax = "4000.0", UIMin = "700.0", UIMax = "4000.0"))
 	float ArmLength = 1400.0f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	UAnimMontage* DeathMontage;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Components")
+	bool IsRunning = false;
+
+	UFUNCTION(BlueprintCallable)
+	void StartSprint();
+
+	UFUNCTION(BlueprintCallable)
+	void StopSprint();
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -57,4 +83,8 @@ private:
 	void MoveRight(float Value);
 	void MoveCameraUpDown(float Value);
 	void RotationPlayerOnCursor();
+
+	void OnDeath();
+	void OnHealthChanged(float NewHealth);
+
 };
