@@ -6,7 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "HealthComponent.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeath);
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeath);
+DECLARE_MULTICAST_DELEGATE(FOnDeath);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, float);
 
 
@@ -27,7 +28,7 @@ public:
 	bool AddHealth(float NewHealth);
 	bool IsHealthFull() const;
 
-	UPROPERTY(BlueprintAssignable)
+	//UPROPERTY(BlueprintAssignable)
 	FOnDeath OnDeath;
 	FOnHealthChanged OnHealthChanged;
  

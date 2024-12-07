@@ -10,6 +10,7 @@ class UCameraComponent;
 class USpringArmComponent;
 class UHealthComponent;
 class UAnimMontage;
+class ULMAWeaponComponent;
 
 UCLASS()
 class LMA_API ALMADefaultCharacter : public ACharacter
@@ -39,6 +40,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components|Endurance")
 	UEnduranceComponent* EnduranceComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+	ULMAWeaponComponent* WeaponComponent;
 
 	UPROPERTY()
 	UDecalComponent* CurrentCursor = nullptr;
