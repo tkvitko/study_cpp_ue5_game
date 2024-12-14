@@ -50,8 +50,8 @@ protected:
 	bool IsCurrentClipEmpty() const;
 
 public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+	FAmmoWeapon GetCurrentAmmoWeapon() const { return CurrentAmmoWeapon; }
 
 private:
 	FAmmoWeapon CurrentAmmoWeapon;
