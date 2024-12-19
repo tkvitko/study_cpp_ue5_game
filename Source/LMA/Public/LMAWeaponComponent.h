@@ -21,7 +21,6 @@ public:
 	ULMAWeaponComponent();
 
 	void Fire();
-	void StartFire();
 	void StopFire();
 	void Reload();
 
@@ -50,7 +49,4 @@ private:
 
 	void OnNotifyReloadFinished(USkeletalMeshComponent* SkeletalMesh);
 	bool CanReload() const;
-
-	bool isShooting;
-		
 };

@@ -6,6 +6,8 @@
 #include "Animations/LMAReloadFinishedAnimNotify.h"
 #include "LMABaseWeapon.h"
 
+FTimerHandle FireTimer;
+
 // Sets default values for this component's properties
 ULMAWeaponComponent::ULMAWeaponComponent()
 {
@@ -21,9 +23,8 @@ ULMAWeaponComponent::ULMAWeaponComponent()
 void ULMAWeaponComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
 	SpawnWeapon();
-	
+	InitAnimNotify();
 }
 
 
@@ -31,10 +32,6 @@ void ULMAWeaponComponent::BeginPlay()
 void ULMAWeaponComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	if (isShooting)
-	{
-		Fire();
-	}
 }
 
 void ULMAWeaponComponent::SpawnWeapon()
@@ -56,16 +53,15 @@ void ULMAWeaponComponent::Fire()
 	if (Weapon && !AnimReloading)
 	{
 		Weapon->Fire();
+		const auto Character = Cast<ACharacter>(GetOwner());
+		Character->GetWorldTimerManager().SetTimer(FireTimer, Weapon, &ALMABaseWeapon::Fire, 0.1f, true);
 	}
-}
-
-void ULMAWeaponComponent::StartFire() {
-	isShooting = true;
 }
 
 void ULMAWeaponComponent::StopFire()
 {
-	isShooting = false;
+	const auto Character = Cast<ACharacter>(GetOwner());
+	Character->GetWorldTimerManager().ClearTimer(FireTimer);
 }
 
 void ULMAWeaponComponent::InitAnimNotify()
