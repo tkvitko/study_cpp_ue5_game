@@ -7,6 +7,8 @@
 #include "LMABaseWeapon.generated.h"
 
 
+DECLARE_MULTICAST_DELEGATE(FOnClearClipSignature);
+
 USTRUCT(BlueprintType)
 struct FAmmoWeapon
 {
@@ -33,6 +35,7 @@ public:
 
 	void Fire();
 	void ChangeClip();
+	void FOnClearClip();
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
@@ -53,6 +56,8 @@ protected:
 public:	
 	virtual void Tick(float DeltaTime) override;
 	FAmmoWeapon GetCurrentAmmoWeapon() const { return CurrentAmmoWeapon; }
+	FOnClearClipSignature OnClearClip;
+	bool IsCurrentClipFull() const;
 
 private:
 	FAmmoWeapon CurrentAmmoWeapon;

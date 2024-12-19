@@ -24,6 +24,8 @@ public:
 	void StopFire();
 	void Reload();
 
+	
+
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
 	TSubclassOf<ALMABaseWeapon> WeaponClass;

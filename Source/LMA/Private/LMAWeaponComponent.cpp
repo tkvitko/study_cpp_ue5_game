@@ -46,6 +46,7 @@ void ULMAWeaponComponent::SpawnWeapon()
 			Weapon->AttachToComponent(Character->GetMesh(), AttachmentRules, "r_Weapon_Socket");
 		}
 	}
+	Weapon->OnClearClip.AddUObject(this, &ULMAWeaponComponent::Reload);
 }
 
 void ULMAWeaponComponent::Fire()
@@ -92,7 +93,11 @@ void ULMAWeaponComponent::OnNotifyReloadFinished(USkeletalMeshComponent* Skeleta
 
 bool ULMAWeaponComponent::CanReload() const
 {
-	return !AnimReloading;
+	if (!Weapon->IsCurrentClipFull())
+	{
+		return !AnimReloading;
+	}
+	return false;
 }
 
 void ULMAWeaponComponent::Reload()
